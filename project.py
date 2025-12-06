@@ -38,7 +38,7 @@ mydb = mysql.connector.connect(
 #     print(f"{param1} and {param2}")
 
 def main():
-    print(mydb)
+    #print(mydb)
 
     argv = sys.argv
     argc = len(argv)
