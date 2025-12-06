@@ -144,7 +144,6 @@ def importData(myDb, *args):
     for table_name in table_order:
         file_name = f"{table_name}.csv"
         file_path = os.path.join(folder_name, file_name)            
-        print(f"Processing {file_name} into table {table_name}")
 
         # Create table
         if table_name in schemas:
