@@ -133,14 +133,15 @@ def importData(myDb, *args):
         "DataStorage",
         "ModelServices",
         "ModelConfigurations"
-    ]    
-    # Drop all tables in reverse order
+    ]   
+
+    # Drop all tables
     for table_name in reversed(table_order):
         mycursor.execute(f"DROP TABLE IF EXISTS {table_name}")
         
     myDb.commit()
     
-    # Process files in the correct order
+    # Process files
     for table_name in table_order:
         file_name = f"{table_name}.csv"
         file_path = os.path.join(folder_name, file_name)            
@@ -156,12 +157,8 @@ def importData(myDb, *args):
         with open(file_path, 'r') as csvfile:
             reader = csv.reader(csvfile)
             headers = next(reader)
-            
-            # Create placeholders for SQL INSERT
             placeholders = ', '.join(['%s'] * len(headers))
             insert_sql = f"INSERT IGNORE INTO {table_name} ({', '.join(headers)}) VALUES ({placeholders})"
-            
-            row_count = 0
             for row in reader:
                 mycursor.execute(insert_sql, row)
             
