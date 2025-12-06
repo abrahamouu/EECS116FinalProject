@@ -133,10 +133,7 @@ def importData(myDb, *args):
         "DataStorage",
         "ModelServices",
         "ModelConfigurations"
-    ]
-    
-    print(f"Importing from folder {folder_name}")
-    
+    ]    
     # Drop all tables in reverse order
     for table_name in reversed(table_order):
         mycursor.execute(f"DROP TABLE IF EXISTS {table_name}")
@@ -154,7 +151,6 @@ def importData(myDb, *args):
             mycursor.execute(schemas[table_name])
             myDb.commit()
         else:
-            print(f"No schema defined for {table_name}")
             continue
 
         # Insert CSV data
@@ -172,5 +168,5 @@ def importData(myDb, *args):
             
             myDb.commit()
 
-    print("Import Complete")
+    print("Success")
     return
