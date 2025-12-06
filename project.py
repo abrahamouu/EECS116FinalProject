@@ -11,20 +11,20 @@ import findtopnconfig
 import keywordsearch
 
 #for autograder
-# mydb = mysql.connector.connect(
-#     host = "localhost",
-#     user = "test",
-#     password = "password",
-#     database = "cs122a"
-# )
+mydb = mysql.connector.connect(
+     host = "localhost",
+     user = "test",
+     password = "password",
+     database = "cs122a"
+)
 
 #for Jakobs local tests
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "121221",
-    database = "cs122a"
-)
+#mydb = mysql.connector.connect(
+    #host = "localhost",
+    #user = "root",
+    #password = "121221",
+    #database = "cs122a"
+#)
 
 #for ____ local tests
 # mydb = mysql.connector.connect(
