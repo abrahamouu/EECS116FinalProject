@@ -5,9 +5,9 @@ import importdata
 import insertagentclient
 import addcustomizedmodel
 import deletebasemodel
-import listinternetservice
+import listBaseModelKeyWord
 import countcustomizedmodel
-import findtopnconfig
+import topNDurationConfig
 import keywordsearch
 
 #for autograder
@@ -53,11 +53,11 @@ def main():
         #function 4
         "deleteBaseModel" : deletebasemodel.deleteBaseModel, 
         #fucntion 5
-        "listInternetService" : listinternetservice.listInternetService,
+        "listInternetService" : listBaseModelKeyWord.listInternetService,
         #function 6
         "countCustomizedModel" : countcustomizedmodel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : findtopnconfig.findTopNConfig,
+        "topNDurationConfig" : topNDurationConfig.findTopNConfig,
         #function 8
         "listBaseModelKeyWord" : keywordsearch.keyWordSearch
     }
