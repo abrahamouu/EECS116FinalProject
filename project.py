@@ -5,8 +5,8 @@ import importdata
 import insertagentclient
 import addcustomizedmodel
 import deletebasemodel
-import listBaseModelKeyWord
-import countcustomizedmodel
+import listinternetservice
+import countCustomizedModel
 import topNDurationConfig
 import keywordsearch
 
@@ -53,11 +53,11 @@ def main():
         #function 4
         "deleteBaseModel" : deletebasemodel.deleteBaseModel, 
         #fucntion 5
-        "listInternetService" : listBaseModelKeyWord.listInternetService,
+        "listInternetService" : listinternetservice.listInternetService,
         #function 6
-        "countCustomizedModel" : countcustomizedmodel.countCustomizedModel,
+        "countCustomizedModel" : countCustomizedModel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : topNDurationConfig.findTopNConfig,
+        "topNDurationConfig" : topNDurationConfig.topNDurattionConfig,
         #function 8
         "listBaseModelKeyWord" : keywordsearch.keyWordSearch
     }
