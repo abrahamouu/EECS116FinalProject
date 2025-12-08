@@ -23,7 +23,7 @@ def countCustomizedModel(mydb, *args):
     try:
         cursor.execute(query, bmid_list)
         results = cursor.fetchall()
-        # print("Table: bmid, description, customizedModelCount")
+
         for bmid, description, count in results:
             print(f"{bmid},{description},{count}")
     except:
