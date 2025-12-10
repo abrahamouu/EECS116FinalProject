@@ -6,8 +6,8 @@ import insertagentclient
 import addcustomizedmodel
 import deletebasemodel
 import listinternetservice
-import countcustomizedmodel
-import findtopnconfig
+import countCustomizedModel
+import topNDurationConfig
 import keywordsearch
 
 #Q9
@@ -58,9 +58,9 @@ def main():
         #fucntion 5
         "listInternetService" : listinternetservice.listInternetService,
         #function 6
-        "countCustomizedModel" : countcustomizedmodel.countCustomizedModel,
+        "countCustomizedModel" : countCustomizedModel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : findtopnconfig.findTopNConfig,
+        "topNDurationConfig" : topNDurationConfig.topNDurattionConfig,
         #function 8
         "listBaseModelKeyWord" : keywordsearch.keyWordSearch,
 
