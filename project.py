@@ -22,20 +22,20 @@ import printNL2SQL
 # )
 
 #for Jakobs local tests
-# mydb = mysql.connector.connect(
-#     host = "localhost",
-#     user = "root",
-#     password = "121221",
-#     database = "cs122a"
-# )
-
-#for ____ local tests
 mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    password = "Kailey18!",
+    password = "121221",
     database = "cs122a"
 )
+
+#for ____ local tests
+# mydb = mysql.connector.connect(
+#     host = "localhost",
+#     user = "root",
+#     password = "Kailey18!",
+#     database = "cs122a"
+# )
 
 # def importDataTest(param1, param2):
 #     print(f"{param1} and {param2}")
