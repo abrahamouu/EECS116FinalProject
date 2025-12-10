@@ -6,25 +6,28 @@ import insertagentclient
 import addcustomizedmodel
 import deletebasemodel
 import listinternetservice
-import countCustomizedModel
-import topNDurationConfig
+import countcustomizedmodel
+import findtopnconfig
 import keywordsearch
 
-#for autograder
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "test",
-    password = "password",
-    database = "cs122a"
-)
+#Q9
+import printNL2SQL
 
-#for Jakobs local tests
+#for autograder
 # mydb = mysql.connector.connect(
 #     host = "localhost",
-#     user = "root",
-#     password = "121221",
+#     user = "test",
+#     password = "password",
 #     database = "cs122a"
 # )
+
+#for Jakobs local tests
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "121221",
+    database = "cs122a"
+)
 
 #for ____ local tests
 # mydb = mysql.connector.connect(
@@ -55,11 +58,14 @@ def main():
         #fucntion 5
         "listInternetService" : listinternetservice.listInternetService,
         #function 6
-        "countCustomizedModel" : countCustomizedModel.countCustomizedModel,
+        "countCustomizedModel" : countcustomizedmodel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : topNDurationConfig.topNDurattionConfig,
+        "topNDurationConfig" : findtopnconfig.findTopNConfig,
         #function 8
-        "listBaseModelKeyWord" : keywordsearch.keyWordSearch
+        "listBaseModelKeyWord" : keywordsearch.keyWordSearch,
+
+        #NL2SQL
+        "printNL2SQL" : printNL2SQL.printNL2SQL
     }
 
     if argc > 1:
