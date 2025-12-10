@@ -22,20 +22,20 @@ import printNL2SQL
 # )
 
 #for Jakobs local tests
+# mydb = mysql.connector.connect(
+#     host = "localhost",
+#     user = "root",
+#     password = "121221",
+#     database = "cs122a"
+# )
+
+# for ____ local tests
 mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
-    password = "121221",
+    password = "Kailey18!",
     database = "cs122a"
 )
-
-#for ____ local tests
-# mydb = mysql.connector.connect(
-#     host = "localhost",
-#     user = "test",
-#     password = "password",
-#     database = "cs122a"
-# )
 
 # def importDataTest(param1, param2):
 #     print(f"{param1} and {param2}")
@@ -60,7 +60,7 @@ def main():
         #function 6
         "countCustomizedModel" : countCustomizedModel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : topNDurationConfig.findTopNConfig,
+        "topNDurationConfig" : topNDurationConfig.topNDurationConfig,
         #function 8
         "listBaseModelKeyWord" : keywordsearch.keyWordSearch,
 

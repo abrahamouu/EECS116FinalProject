@@ -1,4 +1,4 @@
-def topNDurattionConfig(mydb, *args):
+def topNDurationConfig(mydb, *args):
     cursor = mydb.cursor()
 
     if len(args) != 2:
