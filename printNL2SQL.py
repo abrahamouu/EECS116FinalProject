@@ -47,8 +47,8 @@ def printNL2SQL(mydb, *args):
     WHERE rn = 1;
     """
     SQL_correct2 = False
-    SQL_ERROR_TABLE_MISMATCH2 = True
-    # Execute Q1.2 SQL  ERRORED SINCE IT PRODUCED AN INCORRECT QUERY
+    SQL_ERROR_TABLE_MISMATCH2 = "Doesnt execute, it wrongly selected from BaseModel instead of ModelServices"
+    # Execute Q1.2 SQL  
     # cursor.execute(LLM_returned_SQL_query2)
     # Q1_query_results2 = cursor.fetchall()
     # for row in Q1_query_results2:
