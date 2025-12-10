@@ -60,7 +60,7 @@ def main():
         #function 6
         "countCustomizedModel" : countCustomizedModel.countCustomizedModel,
         #function 7
-        "topNDurationConfig" : topNDurationConfig.topNDurattionConfig,
+        "topNDurationConfig" : topNDurationConfig.topNDurationConfig,
         #function 8
         "listBaseModelKeyWord" : keywordsearch.keyWordSearch,
 
