@@ -55,7 +55,52 @@ def printNL2SQL(mydb, *args):
     #     print(row)
 
     #---Q2---
-    
+    q2NL_query_id3 = 3
+    q2NL_query3 = "Find all the Internet Service(sid) that are utilized by any Base Model built by the agent creator user_iuwrh."
+    q2LLM_model_name3 = "ChatGPT-5.1"
+    q2prompt3 = 'Achieve this NL2SQL task from the given natural language query and table schema: [Find all the Internet Service(sid) that are utilized by any Base Model built by the agent creator user_iuwrh] [ """ CREATE TABLE User ( uid INT, email TEXT NOT NULL, username TEXT NOT NULL, PRIMARY KEY (uid) ) """, "AgentCreator": """ CREATE TABLE AgentCreator ( uid INT, bio TEXT, payout TEXT, PRIMARY KEY (uid), FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE ) """, "BaseModel": """ CREATE TABLE BaseModel ( bmid INT, creator_uid INT NOT NULL, description TEXT NOT NULL, PRIMARY KEY (bmid), FOREIGN KEY (creator_uid) REFERENCES AgentCreator(uid) ON DELETE CASCADE ) """, "InternetService": """ CREATE TABLE InternetService ( sid INT, provider TEXT NOT NULL, endpoints TEXT NOT NULL, PRIMARY KEY (sid) ) """, "ModelServices": """ CREATE TABLE ModelServices ( bmid INT NOT NULL, sid INT NOT NULL, version INT NOT NULL, PRIMARY KEY (bmid, sid), FOREIGN KEY (bmid) REFERENCES BaseModel(bmid) ON DELETE CASCADE, FOREIGN KEY (sid) REFERENCES InternetService(sid) ON DELETE CASCADE ) """'
+    q2LLM_returned_SQL_id3 = 3
+    q2LLM_returned_SQL_query3= """
+    SELECT DISTINCT ms.sid
+    FROM ModelServices ms
+    JOIN BaseModel bm
+        ON ms.bmid = bm.bmid
+    JOIN AgentCreator ac
+        ON bm.creator_uid = ac.uid
+    JOIN User u
+        ON ac.uid = u.uid
+    WHERE u.username = 'user_iuwrh';
+    """
+    q2SQL_correct3 = True
+    SQL_ERROR_TABLE_MISMATCH3 = False
+
+    q2NL_query_id4 = 4
+    q2NL_query4 = "Find all the Internet Service(sid) that are utilized by any Base Model built by the agent creator user_iuwrh."
+    q2LLM_model_name4 = "ChatGPT-5.1"
+    q2prompt4 = 'Translate this natural language query into SQL format: [Find all the Internet Service(sid) that are utilized by every Base Model built by the agent creator user_iuwrh] with a schema including a user table with uid, email, username; agentcreator table with uid, bio, payout; basemodel table with bmid, creator_uid, description; internetservice table with sid, provider, endpoints; and modelservices table with bmid, sid, version.'
+    q2LLM_returned_SQL_id4 = 4
+    q2LLM_returned_SQL_query4= """
+    SELECT ms.sid
+    FROM ModelServices ms
+    WHERE ms.bmid IN (
+        SELECT bm.bmid
+        FROM BaseModel bm
+        JOIN User u ON u.uid = bm.creator_uid
+        WHERE u.username = 'user_iuwrh'
+    )
+    GROUP BY ms.sid
+    HAVING COUNT(DISTINCT ms.bmid) =
+        (
+            -- number of base models created by user_iuwrh
+            SELECT COUNT(*)
+            FROM BaseModel bm
+            JOIN User u ON u.uid = bm.creator_uid
+            WHERE u.username = 'user_iuwrh'
+        );
+
+    """
+    q2SQL_correct4 = False
+    SQL_ERROR_TABLE_MISMATCH4 = "Returns empty set, SQL query searches for sid utilized by every base model from specified agent creator, not any base model"
 
     #---Q3---
     q3NL_query_id5 = 5
@@ -108,6 +153,11 @@ def printNL2SQL(mydb, *args):
     prompt1 = prompt1.replace("\n", "\\n")
     prompt2 = prompt2.replace("\n", "\\n")
 
+    q2LLM_returned_SQL_query3 = q2LLM_returned_SQL_query3.replace("\n", "\\n")
+    q2LLM_returned_SQL_query4 = q2LLM_returned_SQL_query4.replace("\n", "\\n")
+    q2prompt3 = q2prompt3.replace("\n", "\\n")
+    q2prompt4 = q2prompt4.replace("\n", "\\n")
+
     q3LLM_returned_SQL_query5 = q3LLM_returned_SQL_query5.replace("\n", "\\n")
     q3LLM_returned_SQL_query6 = q3LLM_returned_SQL_query6.replace("\n", "\\n")
     q3prompt5 = q3prompt5.replace("\n", "\\n")
@@ -147,8 +197,29 @@ def printNL2SQL(mydb, *args):
             SQL_correct2,
             SQL_ERROR_TABLE_MISMATCH2
         ])
-        #Q2
-
+        #Q2.1
+        writer.writerow([
+            q2NL_query_id3,
+            q2NL_query3,
+            q2LLM_model_name3,
+            q2prompt3,
+            q2LLM_returned_SQL_id3,
+            q2LLM_returned_SQL_query3,
+            q2SQL_correct3,
+            SQL_ERROR_TABLE_MISMATCH3
+        ])
+        #Q2.2
+        writer.writerow([
+            q2NL_query_id4,
+            q2NL_query4,
+            q2LLM_model_name4,
+            q2prompt4,
+            q2LLM_returned_SQL_id4,
+            q2LLM_returned_SQL_query4,
+            q2SQL_correct4,
+            SQL_ERROR_TABLE_MISMATCH4
+        ])
+        
         #Q3.1
         writer.writerow([
             q3NL_query_id5,
