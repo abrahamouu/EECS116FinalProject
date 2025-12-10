@@ -14,12 +14,12 @@ import keywordsearch
 import printNL2SQL
 
 #for autograder
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "test",
-    password = "password",
-    database = "cs122a"
-)
+# mydb = mysql.connector.connect(
+#     host = "localhost",
+#     user = "test",
+#     password = "password",
+#     database = "cs122a"
+# )
 
 #for Jakobs local tests
 # mydb = mysql.connector.connect(
@@ -30,12 +30,12 @@ mydb = mysql.connector.connect(
 # )
 
 #for ____ local tests
-# mydb = mysql.connector.connect(
-#     host = "localhost",
-#     user = "test",
-#     password = "password",
-#     database = "cs122a"
-# )
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "Kailey18!",
+    database = "cs122a"
+)
 
 # def importDataTest(param1, param2):
 #     print(f"{param1} and {param2}")

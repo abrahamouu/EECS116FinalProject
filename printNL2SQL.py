@@ -31,10 +31,55 @@ def printNL2SQL(mydb, *args):
     
 
     #Q3
+    q3NL_query_id5 = 5
+    q3NL_query5 = "Find all customized models(mid) that do not appear in model configurations. "
+    q3LLM_model_name5 = "ChatGPT-5.1"
+    q3prompt5 = 'Translate this natural language into a sql query: Find all customized models(mid) that do not appear in model configurations. Here are the schemas: "User": """ CREATE TABLE User ( uid INT, email TEXT NOT NULL, username TEXT NOT NULL, PRIMARY KEY (uid) ) """, "AgentCreator": """ CREATE TABLE AgentCreator ( uid INT, bio TEXT, payout TEXT, PRIMARY KEY (uid), FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE ) """, "AgentClient": """ CREATE TABLE AgentClient ( uid INT, interests TEXT NOT NULL, cardholder TEXT NOT NULL, expire DATE NOT NULL, cardno INT NOT NULL, cvv INT NOT NULL, zip INT NOT NULL, PRIMARY KEY (uid), FOREIGN KEY (uid) REFERENCES User(uid) ON DELETE CASCADE ) """, "BaseModel": """ CREATE TABLE BaseModel ( bmid INT, creator_uid INT NOT NULL, description TEXT NOT NULL, PRIMARY KEY (bmid), FOREIGN KEY (creator_uid) REFERENCES AgentCreator(uid) ON DELETE CASCADE ) """, "CustomizedModel": """ CREATE TABLE CustomizedModel ( bmid INT, mid INT NOT NULL, PRIMARY KEY (bmid, mid), FOREIGN KEY (bmid) REFERENCES BaseModel(bmid) ON DELETE CASCADE ) """, "Configuration": """ CREATE TABLE Configuration ( cid INT, client_uid INT NOT NULL, content TEXT NOT NULL, labels TEXT NOT NULL, PRIMARY KEY (cid), FOREIGN KEY (client_uid) REFERENCES AgentClient(uid) ON DELETE CASCADE ) """, "InternetService": """ CREATE TABLE InternetService ( sid INT, provider TEXT NOT NULL, endpoints TEXT NOT NULL, PRIMARY KEY (sid) ) """, "LLMService": """ CREATE TABLE LLMService ( sid INT, domain TEXT, PRIMARY KEY (sid), FOREIGN KEY (sid) REFERENCES InternetService(sid) ON DELETE CASCADE ) """, "DataStorage": """ CREATE TABLE DataStorage ( sid INT, type TEXT, PRIMARY KEY (sid), FOREIGN KEY (sid) REFERENCES InternetService(sid) ON DELETE CASCADE ) """, "ModelServices": """ CREATE TABLE ModelServices ( bmid INT NOT NULL, sid INT NOT NULL, version INT NOT NULL, PRIMARY KEY (bmid, sid), FOREIGN KEY (bmid) REFERENCES BaseModel(bmid) ON DELETE CASCADE, FOREIGN KEY (sid) REFERENCES InternetService(sid) ON DELETE CASCADE ) """, "ModelConfigurations": """ CREATE TABLE ModelConfigurations ( bmid INT NOT NULL, mid INT NOT NULL, cid INT NOT NULL, duration INT NOT NULL, PRIMARY KEY (bmid, mid, cid), FOREIGN KEY (bmid, mid) REFERENCES CustomizedModel(bmid, mid) ON DELETE CASCADE, FOREIGN KEY (cid) REFERENCES Configuration(cid) ON DELETE CASCADE ) """'
+    q3LLM_returned_SQL_id5 = 5
+    q3LLM_returned_SQL_query5= """
+    SELECT DISTINCT cm.mid
+    FROM CustomizedModel cm
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM ModelConfigurations mc
+        WHERE mc.bmid = cm.bmid
+        AND mc.mid = cm.mid
+    );
+    """
+    q3SQL_correct5 = True
+
+    cursor.execute(q3LLM_returned_SQL_query5)
+    q3_query_results5 = cursor.fetchall()
+    for row in q3_query_results5:
+        print(row)
+
+    q3NL_query_id6 = 6
+    q3NL_query6 = "Find all customized models(mid) that do not appear in model configurations."
+    q3LLM_model_name6 = "ChatGPT-5.1"
+    q3prompt6 = 'Please generate a different sql query with this natural language prompt using the same schema: Find all customized models(mid) that do not appear in model configurations.'
+    q3LLM_returned_SQL_id6 = 6
+    q3LLM_returned_SQL_query6= """
+    SELECT DISTINCT mid
+    FROM CustomizedModel
+    WHERE mid NOT IN (
+        SELECT mid
+        FROM ModelConfigurations
+    );
+    """
+    q3SQL_correct6 = True
+    # Execute Q1 SQL
+    cursor.execute(q3LLM_returned_SQL_query6)
+    q3_query_results6 = cursor.fetchall()
+    for row in q3_query_results6:
+        print(row)
     
     
     LLM_returned_SQL_query = LLM_returned_SQL_query.replace("\n", "\\n")
     prompt = prompt.replace("\n", "\\n")
+    q3LLM_returned_SQL_query5 = q3LLM_returned_SQL_query5.replace("\n", "\\n")
+    q3LLM_returned_SQL_query6 = q3LLM_returned_SQL_query6.replace("\n", "\\n")
+    q3prompt5 = q3prompt5.replace("\n", "\\n")
+    q3prompt6 = q3prompt6.replace("\n", "\\n")
     with open("nl2sql_results.csv", "w") as f:
         writer = csv.writer(f)
         writer.writerow([
@@ -61,6 +106,27 @@ def printNL2SQL(mydb, *args):
         #Q2
 
         #Q3
+        writer.writerow([
+            q3NL_query_id5,
+            q3NL_query5,
+            q3LLM_model_name5,
+            q3prompt5,
+            q3LLM_returned_SQL_id5,
+            q3LLM_returned_SQL_query5,
+            q3SQL_correct5,
+            "NULL"
+        ])
+
+        writer.writerow([
+            q3NL_query_id6,
+            q3NL_query6,
+            q3LLM_model_name6,
+            q3prompt6,
+            q3LLM_returned_SQL_id6,
+            q3LLM_returned_SQL_query6,
+            q3SQL_correct6,
+            "NULL"
+        ])
 
 
 
